@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ai Assistant Hub</title>
+    <link rel="stylesheet" href="../notifications.css">
+    <script src="../notifications.js"></script>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
+        }
+
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-left {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.2));
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-left h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-left p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .features li svg {
+            width: 20px;
+            height: 20px;
+            color: #60a5fa;
+            flex-shrink: 0;
+        }
+
+        .login-right {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .form-group input {
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: white;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-color), #2563eb);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-muted);
+        }
+
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .login-left {
+                display: none;
+            }
+
+            .login-right {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Left Side -->
+        <div class="login-left">
+            <div class="logo">
+                <img src="../chat_icon.png" height="50px" width="50px">
+                Ai Assistant Hub
+            </div>
+            <h1>Welcome Back to Ai Assistant Hub</h1>
+            <p>Sign in to access your dashboard and get your solutions.</p>
+            <ul class="features">
+                <li>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Access your personalized AI dashboard
+                </li>
+                <li>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    High-speed detailed responses
+                </li>
+                <li>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                    Save and sync all your chats
+                </li>
+                <li>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    Enterprise-grade security
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right Side -->
+        <div class="login-right">
+            <div class="login-header">
+                <h2>Sign In</h2>
+                <p>Enter your credentials to access your account</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="forget.html" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login"> Sign In</button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <!-- Google Identity Services Script -->
+            <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+            <!-- Google Configuration -->
+            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID_HERE" data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+            </div>
+
+            <div class="social-login">
+                <!-- Google Button Render Target -->
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                    data-text="sign_in_with" data-size="large" data-logo_alignment="left">
+                </div>
+
+                <button class="social-btn">
+                    <img src="github.png" height="25px">
+                    GitHub
+                </button>
+            </div>
+
+            <div class="signup-link">
+                Don't have an account? <a href="register.html">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle Google Sign-In Response
+        async function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/auth/google", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: response.credential })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showToast('Google Login successful!', 'success');
+                    setTimeout(() => window.location.href = '../index.html', 1000);
+                } else {
+                    showToast(data.message || "Google Login failed", 'error');
+                }
+            } catch (error) {
+                console.error(error);
+                showToast("Server connection failed", 'error');
+            }
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggle = document.querySelector('.password-toggle');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggle.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggle.textContent = '👁️';
+            }
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const btn = document.querySelector('.btn-login');
+            const email = this.querySelector('input[name="email"]').value;
+            const password = this.querySelector('input[name="password"]').value;
+
+            btn.disabled = true;
+            btn.innerText = "Signing In...";
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    // Store user data
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showToast('Login successful!', 'success');
+
+                    setTimeout(() => {
+                        if (data.user.role === 'admin') {
+                            window.location.href = '../admin/index.html';
+                        } else {
+                            window.location.href = '../index.html';
+                        }
+                    }, 1000);
+                } else {
+                    showToast(data.message || 'Login failed', 'error');
+                    btn.disabled = false;
+                    btn.innerText = "Sign In";
+                }
+            } catch (error) {
+                console.error(error);
+                showToast('Server connection failed', 'error');
+                btn.disabled = false;
+                btn.innerText = "Sign In";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

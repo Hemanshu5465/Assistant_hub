@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant Hub - Empower Your Day with Smart AI Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Functional Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="notifications.css">
+  <script src="notifications.js"></script>
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+  </div>
+
+  <!-- Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <div class="logo-icon">🤖</div>
+      <span>Assistant Hub</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Price</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- Login / User Profile Logic Preserved -->
+    <button id="loginBtn" class="nav-cta" onclick="openLogin()">Get Started</button>
+
+    <div id="userProfile" class="user-profile dropdown hidden" style="display: none;">
+      <div class="dropdown-trigger" onclick="toggleDropdown()">
+        <div id="userInitials" class="avatar-sm">U</div>
+        <span id="navUserName" class="nav-user-name">User</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div id="userDropdown" class="dropdown-menu">
+        <div class="dropdown-header">
+          <p id="dropdownName" class="user-name-large">User Name</p>
+          <p id="dropdownEmail" class="user-email-small">user@example.com</p>
+        </div>
+        <hr class="dropdown-divider">
+        <a href="forms/profile.html" class="dropdown-item">👤 View Profile</a>
+        <a href="#" class="dropdown-item">⚙️ Settings</a>
+        <hr class="dropdown-divider">
+        <button class="dropdown-item logout-item" onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-badge">
+      🚀 The Ultimate AI Assistant Hub
+    </div>
+    <h1>
+      Empower Your Day with<br>
+      <span class="gradient-text">Smart AI Agents</span>
+    </h1>
+    <p>
+      Access a team of specialized AI assistants built to help you code, study, stay fit, and manage your life—all in
+      one place.
+    </p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="openRegister()">Get Started Now</button>
+      <button class="btn btn-secondary">Explore Assistants</button>
+    </div>
+  </section>
+
+  <!-- Dashboard / Assistant Selection -->
+  <section class="dashboard" id="assistants">
+    <div class="section-header fade-in">
+      <h2>Your <span class="gradient-text">AI Team</span></h2>
+      <p>Choose from our specialized assistants, each designed to excel in their domain</p>
+    </div>
+
+    <div class="bento-grid">
+      <div class="assistant-card fade-in" onclick="openChat('Coding Assistant')">
+        <div class="assistant-icon">💻</div>
+        <h3>Coding Assistant</h3>
+        <p>Get instant help with debugging, code reviews, and learning new languages.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Gym Assistant')">
+        <div class="assistant-icon">🏋️</div>
+        <h3>Gym & Fitness</h3>
+        <p>Personalized workout plans, nutrition advice, and fitness tracking.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Study Assistant')">
+        <div class="assistant-icon">📚</div>
+        <h3>Study Companion</h3>
+        <p>Master any subject with tailored study plans, and learning strategies.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Finance Assistant')">
+        <div class="assistant-icon">💰</div>
+        <h3>Finance Advisor</h3>
+        <p>Smart budgeting, investment insights, and financial planning.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Mental Health Assistant')">
+        <div class="assistant-icon">🧠</div>
+        <h3>Mental Health</h3>
+        <p>Mindfulness exercises, stress management, and emotional support.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Business Assistant')">
+        <div class="assistant-icon">📊</div>
+        <h3>Business Assistant</h3>
+        <p>Startup & growth strategies for your next big idea.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Travel Assistant')">
+        <div class="assistant-icon">🌍</div>
+        <h3>Travel Planner</h3>
+        <p>Plan perfect trips with itinerary suggestions and local tips.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+
+      <div class="assistant-card fade-in" onclick="openChat('Health Assistant')">
+        <div class="assistant-icon">🩺</div>
+        <h3>Health Assistant</h3>
+        <p>Discover tips regarding your health tailored to your needs.</p>
+        <button class="start-chat-btn">Start Chat</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="section-header fade-in">
+      <h2>Why Choose <span class="gradient-text">AI Assistant Hub</span></h2>
+      <p>Experience the future of productivity with our cutting-edge features</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>Get instant responses with our optimized AI infrastructure</p>
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">🎯</div>
+        <h3>Personalized AI</h3>
+        <p>Assistants that learn and adapt to your unique needs</p>
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">💬</div>
+        <h3>Real-time Chat</h3>
+        <p>Natural conversations that feel human and intuitive</p>
+      </div>
+
+      <div class="service-card fade-in">
+        <div class="service-icon">🔒</div>
+        <h3>Secure & Private</h3>
+        <p>Enterprise-grade security for all your conversations</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="about-content">
+      <div class="about-text fade-in">
+        <h2>Built for <span class="gradient-text">Tomorrow</span></h2>
+        <p>
+          AI Assistant Hub leverages cutting-edge artificial intelligence to provide you with a comprehensive suite of
+          specialized assistants.
+        </p>
+        <p>
+          Our platform combines powerful AI technology with an intuitive, beautiful interface that makes complex tasks
+          feel effortless.
+        </p>
+      </div>
+
+      <div class="about-features">
+        <div class="feature-box fade-in">
+          <div class="feature-box-icon">🔐</div>
+          <h4>Private & Secure</h4>
+          <p>End-to-end encryption keeps your data safe</p>
+        </div>
+        <!-- ... other features ... -->
+        <div class="feature-box fade-in">
+          <div class="feature-box-icon">🌐</div>
+          <h4>Always Available</h4>
+          <p>24/7 access from any device, anywhere</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="section-header fade-in">
+      <h2>Get in <span class="gradient-text">Touch</span></h2>
+      <p>Have questions? We'd love to hear from you</p>
+    </div>
+
+    <!-- CONTACT FORM PRESERVED Logic -->
+    <form class="contact-form fade-in" id="contactForm">
+      <div class="form-group">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" placeholder="Your name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" placeholder="Tell us what's on your mind..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="contactBtn">Send Message</button>
+    </form>
+    <p id="contactStatus" style="margin-top: 10px; font-weight: bold; text-align: center; color: var(--text-white);">
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Assistants</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openChat('Coding Assistant')">Coding AI</a></li>
+          <li><a href="javascript:void(0)" onclick="openChat('Gym Assistant')">Fitness AI</a></li>
+          <li><a href="javascript:void(0)" onclick="openChat('Study Assistant')">Study AI</a></li>
+          <li><a href="javascript:void(0)" onclick="openChat('Finance Assistant')">Finance AI</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 AI Assistant Hub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Premium Auth Modal (Preserved) -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-close" onclick="closeAuthModal()">&times;</div>
+      <div class="modal-icon">🔒</div>
+      <h2>Login Required</h2>
+      <p>You need to be logged in to access our specialized AI assistants and maintain your chat history. It's free and
+        takes just a minute!</p>
+      <div class="modal-actions">
+        <button class="btn-modal-primary" onclick="window.location.href='forms/login.html'">Login Now</button>
+        <button class="btn-modal-secondary" onclick="window.location.href='forms/register.html'">Create Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    function openRegister() {
+      window.location.href = "forms/register.html";
+    }
+
+    function openLogin() {
+      window.location.href = "forms/login.html";
+    }
+
+    // Animated Background Logic
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+      const numberOfParticles = 80;
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 1;
+          this.speedX = Math.random() * 0.5 - 0.25;
+          this.speedY = Math.random() * 0.5 - 0.25;
+          this.opacity = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x > canvas.width) this.x = 0;
+          else if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          else if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function initParticles() {
+        particlesArray = [];
+        for (let i = 0; i < numberOfParticles; i++) {
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+          particlesArray[i].update();
+          particlesArray[i].draw();
+        }
+        requestAnimationFrame(animateParticles);
+      }
+
+      initParticles();
+      animateParticles();
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+      });
+    }
+
+    // Scroll Animation
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Card Hover Effect
+    document.querySelectorAll('.assistant-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // Contact Form Logic (Preserved from original inline script)
+    document.getElementById("contactForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("contactName").value;
+      const email = document.getElementById("contactEmail").value;
+      const message = document.getElementById("contactMessage").value;
+      const btn = document.getElementById("contactBtn");
+      const status = document.getElementById("contactStatus");
+
+      btn.disabled = true;
+      btn.innerText = "Sending...";
+      status.innerText = "";
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          status.style.color = "#22c55e"; // Green
+          status.innerText = "Message sent successfully!";
+          this.reset();
+          setTimeout(() => status.innerText = "", 3000);
+        } else {
+          status.style.color = "#ef4444"; // Red
+          status.innerText = data.message || "Failed to send message.";
+        }
+      } catch (err) {
+        console.error(err);
+        status.style.color = "#ef4444";
+        status.innerText = "Server error. Try again later.";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Send Message";
+      }
+    });
+  </script>
+</body>
+
+</html>

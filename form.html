@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <link rel="stylesheet" href="notifications.css">
+    <script src="notifications.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5298 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .form-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1e3a5f;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #1e3a5f;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e3a5f' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(42, 82, 152, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            padding: 15px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            color: #155724;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .assistant-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .form-header {
+                padding: 30px 20px;
+            }
+
+            .form-header h1 {
+                font-size: 24px;
+            }
+
+            .form-body {
+                padding: 30px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>User Information</h1>
+            <p>Please fill in your details below</p>
+        </div>
+        <div class="form-body">
+            <div class="success-message" id="successMessage">
+                ✓ Form submitted successfully!
+            </div>
+            <form id="dataForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" name="company" placeholder="Enter your company name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="assistant">
+                        <span class="assistant-icon">🤖</span>Select Assistant
+                    </label>
+                    <select id="assistant" name="assistant" required>
+                        <option value="">Choose an assistant...</option>
+                        <option value="gym">Gym Assistant</option>
+                        <option value="study">Study Assistant</option>
+                        <option value="coding">Coding Assistant</option>
+                        <option value="mental">Mental Health</option>
+                        <option value="career">Career Assistant</option>
+                        <option value="business">Business Assistant</option>
+                        <option value="finance">Finance Assistant</option>
+                        <option value="travel">Travel Assistant</option>
+                        <option value="health">Health Assistant</option>
+                        <option value="productivity">Productivity Assistant</option>
+                        <option value="language">Language Assistant</option>
+                        <option value="support">Support Assistant</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Submit Information</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('dataForm');
+        const successMessage = document.getElementById('successMessage');
+
+        const redirectMap = {
+            gym: "agents/gym.html",
+            study: "agents/study.html",
+            coding: "agents/coding.html",
+            mental: "agents/mental.html",
+            career: "agents/career.html",
+            business: "agents/business.html",
+            finance: "agents/finance.html",
+            travel: "agents/travel.html",
+            health: "agents/health.html",
+            productivity: "agents/productivity.html",
+            language: "agents/language.html",
+            support: "agents/support.html"
+        };
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Submitting...";
+
+            // Collect Data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Add User ID if logged in
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user) data.userId = user.id;
+
+            console.log("Submitting:", data);
+
+            if (!data.assistant) {
+                showToast("Please select an assistant.", "warning");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Information";
+                return;
+            }
+
+            try {
+                // Send to Backend
+                const res = await fetch("http://127.0.0.1:5000/api/form", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+
+                if (res.ok) {
+                    // Show Success
+                    showToast("Form submitted successfully!", "success");
+                    successMessage.style.display = 'block';
+
+                    // Redirect logic
+                    setTimeout(() => {
+                        const target = redirectMap[data.assistant];
+                        if (target) {
+                            window.location.href = target;
+                        } else {
+                            // Fallback if key missing
+                            showToast("Assistant page not found, redirecting to home.", "info");
+                            window.location.href = "index.html";
+                        }
+                    }, 1500);
+                } else {
+                    showToast(result.message || "Submission failed. Please try again.", "error");
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Submit Information";
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                showToast("Server error. Is the backend running?", "error");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Information";
+            }
+        });
+
+        // Input animation logic
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.2s ease';
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

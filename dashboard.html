@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+
+<script>
+const token = localStorage.getItem("token");
+if (!token) window.location.href = "login.html";
+</script>
+
+<h1>Dashboard</h1>
+<p>Welcome, <span id="username">loading...</span></p>
+
+<button onclick="logout()">Logout</button>
+
+<script>
+fetch("http://localhost:5000/api/auth/me", {
+  headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+})
+.then(res => res.json())
+.then(user => document.getElementById("username").innerText = user.name);
+
+function logout() {
+  localStorage.removeItem("token");
+  location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

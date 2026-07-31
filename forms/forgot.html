@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - Ai Assistant Hub</title>
+    <link rel="stylesheet" href="../style.css"> <!-- Reusing main styles if applicable, or inline -->
+    <style>
+        body {
+            background: #f1f5f9;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        p {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Forgot Password?</h2>
+        <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+        <form id="forgotForm">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <button type="submit" id="submitBtn">Send Reset Link</button>
+        </form>
+
+        <a href="login.html" class="back-link">Back to Login</a>
+    </div>
+
+    <script>
+        document.getElementById("forgotForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const email = document.getElementById("email").value;
+
+            btn.disabled = true;
+            btn.innerText = "Sending...";
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/auth/forgot-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert("Email sent! Check your inbox.");
+                    window.location.href = "login.html";
+                } else {
+                    alert(data.message || "Error sending email");
+                    btn.disabled = false;
+                    btn.innerText = "Send Reset Link";
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server connection failed");
+                btn.disabled = false;
+                btn.innerText = "Send Reset Link";
+            }
+        });
+    </script>
+</body>
+
+</html>

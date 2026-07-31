@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - AI Assistant Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --card-white: #ffffff;
+            --accent-blue: #2563eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .pricing-hero {
+            text-align: center;
+            padding: 100px 20px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 40px;
+        }
+
+        .pricing-card {
+            background: var(--card-white);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 32px;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: 25px;
+            right: -35px;
+            background: var(--accent-blue);
+            color: white;
+            padding: 8px 45px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+
+        .tier-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .tier-price span {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 50px 0;
+            flex: 1;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .feature-item.check::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .feature-item.cross::before {
+            content: "✕";
+            color: #ef4444;
+            font-weight: 900;
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .cta-btn {
+            padding: 18px 25px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--accent-blue);
+            border: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-outline:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                padding: 0 20px;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo"><img src="chat_icon.png" height="35" width="35">AI Assistant Hub</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="pricing.html">Price</a>
+            <a href="about.html">About</a>
+            <a href="index.html#contact">Contact</a>
+            <div id="userProfile" class="user-profile dropdown hidden" style="display: none;">
+                <div class="dropdown-trigger" onclick="toggleDropdown()">
+                    <div id="userInitials" class="avatar-sm">U</div>
+                    <span id="navUserName" class="nav-user-name">User</span>
+                    <span class="chevron">▼</span>
+                </div>
+                <div id="userDropdown" class="dropdown-menu">
+                    <div class="dropdown-header">
+                        <p id="dropdownName" class="user-name-large">User Name</p>
+                        <p id="dropdownEmail" class="user-email-small">user@example.com</p>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <a href="forms/profile.html" class="dropdown-item">👤 View Profile</a>
+                    <a href="#" class="dropdown-item">⚙️ Settings</a>
+                    <hr class="dropdown-divider">
+                    <button class="dropdown-item logout-item" onclick="logout()">🚪 Logout</button>
+                </div>
+            </div>
+            <button id="loginBtn" class="nav-btn" onclick="window.location.href='forms/login.html'">Login</button>
+        </nav>
+    </header>
+
+    <section class="pricing-hero">
+        <h1 class="reveal reveal-up">Simple, Transparent Pricing</h1>
+        <p class="reveal reveal-up">Choose the plan that's right for you. Start building your AI-enhanced lifestyle
+            today.</p>
+    </section>
+
+    <div class="pricing-grid">
+        <!-- Free Tier -->
+        <div class="pricing-card reveal reveal-up">
+            <div class="tier-name">Free</div>
+            <div class="tier-price">$0<span>/month</span></div>
+            <ul class="feature-list">
+                <li class="feature-item check">Access to basic assistants</li>
+                <li class="feature-item check">10 messages per day</li>
+                <li class="feature-item check">Cloud history (24h)</li>
+                <li class="feature-item cross">Custom assistant training</li>
+                <li class="feature-item cross">Priority server access</li>
+            </ul>
+            <a href="forms/login.html" class="cta-btn btn-outline">Start for free</a>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="pricing-card popular reveal reveal-up">
+            <div class="badge-popular">Most Popular</div>
+            <div class="tier-name">Pro</div>
+            <div class="tier-price">$19<span>/month</span></div>
+            <ul class="feature-list">
+                <li class="feature-item check">All premium assistants</li>
+                <li class="feature-item check">Unlimited messages</li>
+                <li class="feature-item check">Lifetime history</li>
+                <li class="feature-item check">Faster response times</li>
+                <li class="feature-item cross">Dedicated support API</li>
+            </ul>
+            <a href="#" class="cta-btn btn-primary">Try Pro Now</a>
+        </div>
+
+        <!-- Enterprise Tier -->
+        <div class="pricing-card reveal reveal-up">
+            <div class="tier-name">Enterprise</div>
+            <div class="tier-price">$99<span>/month</span></div>
+            <ul class="feature-list">
+                <li class="feature-item check">Everything in Pro</li>
+                <li class="feature-item check">Custom-built agents</li>
+                <li class="feature-item check">Full API access</li>
+                <li class="feature-item check">White-label options</li>
+                <li class="feature-item check">24/7 Dedicated support</li>
+            </ul>
+            <a href="#contact" class="cta-btn btn-outline">Contact Sales</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AI Assistant Hub</h3>
+                <p>Empowering your daily life with specialized AI agents for productivity, health, and learning.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <a href="javascript:void(0)" onclick="openChat('Coding Assistant')">Coding AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Gym Assistant')">Fitness AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Study Assistant')">Study AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Finance Assistant')">Finance AI</a>
+            </div>
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <a href="services.html">Services</a>
+                <a href="about.html">About Hub</a>
+                <a href="forms/profile.html">Privacy Settings</a>
+                <a href="#">Terms of Use</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <p>📍 AI Research Lab, Tech Square</p>
+                <p>✉️ aihub2804@gmail.com</p>
+                <p>🌐 aisssistanthub.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AI Assistant Hub. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

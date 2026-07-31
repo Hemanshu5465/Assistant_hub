@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gym Assistant | AI Assistant Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+   body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+header img {
+  width: 32px;
+  height: 32px;
+}
+
+header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.hero {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+}
+
+.panel {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  padding: 40px 36px;
+  max-width: 900px;
+  width: 100%;
+  animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.panel-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.status {
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 18px;
+  padding: 22px;
+  transition: all 0.35s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(37,99,235,0.15),
+    rgba(30,64,175,0.15),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 25px 50px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(37,99,235,0.45);
+  border-color: rgba(37, 99, 235, 0.6);
+}
+
+.card span {
+  font-size: 32px;
+}
+
+.card h3 {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .panel {
+    padding: 28px 22px;
+  }
+  .panel-header h2 {
+    font-size: 22px;
+  }
+}
+
+.back-home-btn {
+  position: fixed;
+  top: 50%;
+  right: 16px;
+  margin-right: 60px;
+  transform: translateY(-50%);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.35s ease;
+  z-index: 999;
+}
+
+.back-home-btn::before {
+  content: "⬅";
+  font-size: 16px;
+}
+
+.back-home-btn:hover {
+  transform: translateY(-50%) scale(1.08);
+  box-shadow:
+    0 14px 45px rgba(37, 99, 235, 0.55),
+    inset 0 0 0 1px rgba(255,255,255,0.25);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.back-home-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="../chat_icon.png" alt="">
+  <h1>Gym Assistant </h1>
+  <a href="../index.html" class="back-home-btn">Home</a>
+
+</header>
+
+<section class="hero">
+  <div class="panel">
+
+    <div class="panel-header">
+      <h2>🏋️ Gym Assistant</h2>
+      <div class="status">Online</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span>📋</span>
+        <h3>Workout Plan</h3>
+        <p>Get a personalized training routine</p>
+      </div>
+
+      <div class="card">
+        <span>🥗</span>
+        <h3>Diet & Nutrition</h3>
+        <p>Meal plans based on your fitness goals</p>
+      </div>
+
+      <div class="card">
+        <span>🔥</span>
+        <h3>Fat Loss Program</h3>
+        <p>Smart strategies to burn fat effectively</p>
+      </div>
+
+      <div class="card">
+        <span>💪</span>
+        <h3>Muscle Building</h3>
+        <p>Hypertrophy plans and protein guidance</p>
+      </div>
+
+      <div class="card">
+        <span>📈</span>
+        <h3>Progress Tracking</h3>
+        <p>Track weight, reps, and transformation</p>
+      </div>
+
+      <div class="card">
+        <span>🧠</span>
+        <h3>Mindset Coaching</h3>
+        <p>Stay consistent and motivated</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  &copy; 2024 AI Assistant Hub. All rights reserved.
+</footer>
+
+<script type="module" defer>
+  import Chatbot from "https://cdn.n8nchatui.com/v1/embed.js";
+  Chatbot.init({
+    "n8nChatUrl": "https://hdworld.app.n8n.cloud/webhook/0eb25b00-d993-4ccc-9076-8d89107a6dd8/chat",
+    "metadata": {}, // Include any custom data to send with each message to your n8n workflow
+    "theme": {
+      "button": {
+        "backgroundColor": "#474df0",
+        "right": 20,
+        "bottom": 20,
+        "size": 50,
+        "iconColor": "#373434",
+        "customIconSrc": "data:image/jpeg;base64,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",
+        "customIconSize": 100,
+        "customIconBorderRadius": 15,
+        "autoWindowOpen": {
+          "autoOpen": false,
+          "openDelay": 2
+        },
+        "borderRadius": "rounded"
+      },
+      "tooltip": {
+        "showTooltip": false,
+        "tooltipMessage": "Welco",
+        "tooltipBackgroundColor": "#fff9f6",
+        "tooltipTextColor": "#1c1c1c",
+        "tooltipFontSize": 15,
+        "hideTooltipOnMobile": false
+      },
+      "allowProgrammaticMessage": false,
+      "chatWindow": {
+        "borderRadiusStyle": "rounded",
+        "avatarBorderRadius": 25,
+        "messageBorderRadius": 6,
+        "showTitle": true,
+        "title": "Aura Assistant",
+        "titleAvatarSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqXfOIUaPNcL9817_vAQ1DXd4SLRSm69LtFw&s",
+        "avatarSize": 35,
+        "welcomeMessage": "Hello! welcom to Aura assistant world \nHow can i help you ?",
+        "errorMessage": "Please connect me to n8n first",
+        "backgroundColor": "#00000000",
+        "height": 600,
+        "width": 800,
+        "fontSize": 16,
+        "starterPrompts": [
+          "Who are you?",
+          "What do you do?"
+        ],
+        "starterPromptFontSize": 10,
+        "renderHTML": false,
+        "clearChatOnReload": false,
+        "showScrollbar": false,
+        "botMessage": {
+          "backgroundColor": "#1e40af",
+          "textColor": "#ffffff",
+          "showAvatar": true,
+          "avatarSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqXfOIUaPNcL9817_vAQ1DXd4SLRSm69LtFw&s",
+          "showCopyToClipboardIcon": false
+        },
+        "userMessage": {
+          "backgroundColor": "#9eaacc",
+          "textColor": "#ffffff",
+          "showAvatar": true,
+          "avatarSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8QwV2q7xA4PggGYpd3emdM2Nn1obXRmoccE-er2lsMw&s"
+        },
+        "textInput": {
+          "placeholder": "Type your query",
+          "backgroundColor": "#ffffff",
+          "textColor": "#1e1e1f",
+          "sendButtonColor": "#1e40af",
+          "maxChars": 100,
+          "maxCharsWarningMessage": "You exceeded the characters limit. Please input less than 50 characters.",
+          "autoFocus": false,
+          "borderRadius": 5,
+          "sendButtonBorderRadius": 50
+        }
+      }
+    }
+    });
+  </script>
+</body>
+</html>

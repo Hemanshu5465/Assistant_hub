@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Assistant Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --card-white: #ffffff;
+            --accent-blue: #2563eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .about-hero {
+            text-align: center;
+            padding: 100px 20px 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.15));
+            border-radius: 40px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            /* Lighter shadow */
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 40px;
+        }
+
+        .mission-card {
+            background: var(--card-white);
+            padding: 50px 40px;
+            border-radius: 32px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(37, 99, 235, 0.2);
+            box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.12);
+        }
+
+        .mission-card span {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            display: block;
+            filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.06));
+        }
+
+        .mission-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .mission-card p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 968px) {
+            .about-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 50px;
+                padding: 0 20px;
+            }
+
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .mission-grid {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo"><img src="chat_icon.png" height="35" width="35">AI Assistant Hub</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="pricing.html">Price</a>
+            <a href="about.html">About</a>
+            <a href="index.html#contact">Contact</a>
+            <div id="userProfile" class="user-profile dropdown hidden" style="display: none;">
+                <div class="dropdown-trigger" onclick="toggleDropdown()">
+                    <div id="userInitials" class="avatar-sm">U</div>
+                    <span id="navUserName" class="nav-user-name">User</span>
+                    <span class="chevron">▼</span>
+                </div>
+                <div id="userDropdown" class="dropdown-menu">
+                    <div class="dropdown-header">
+                        <p id="dropdownName" class="user-name-large">User Name</p>
+                        <p id="dropdownEmail" class="user-email-small">user@example.com</p>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <a href="forms/profile.html" class="dropdown-item">👤 View Profile</a>
+                    <a href="#" class="dropdown-item">⚙️ Settings</a>
+                    <hr class="dropdown-divider">
+                    <button class="dropdown-item logout-item" onclick="logout()">🚪 Logout</button>
+                </div>
+            </div>
+            <button id="loginBtn" class="nav-btn" onclick="window.location.href='forms/login.html'">Login</button>
+        </nav>
+    </header>
+
+    <header class="about-hero">
+        <h1 class="reveal reveal-up">Building the Future of Human-AI Collaboration</h1>
+        <p class="reveal reveal-up">AI Assistant Hub is more than just a website. It's a bridge between advanced
+            artificial intelligence and your
+            daily potential.</p>
+    </header>
+
+    <section class="about-section">
+        <div class="about-image reveal reveal-left">🤖</div>
+        <div class="about-content">
+            <h2 class="reveal reveal-right">Our Mission</h2>
+            <p class="reveal reveal-right">We believe that AI shouldn't be a complex mystery, but a seamless extension
+                of your own capabilities. Our
+                mission is to provide specialized, context-aware AI assistants that help you excel in everything you do.
+            </p>
+            <p class="reveal reveal-right">From lines of code to gym sets, and from budgeting spreadsheets to mental
+                well-being, we've designed our
+                agents to be experts in their fields, so you don't have to be.</p>
+        </div>
+    </section>
+
+    <div class="mission-grid">
+        <div class="mission-card reveal reveal-up">
+            <span>🚀</span>
+            <h3>Accessibility</h3>
+            <p>Breaking down the barriers to entry for advanced LLM technology, making it easy for anyone to use.</p>
+        </div>
+        <div class="mission-card reveal reveal-up">
+            <span>🛡️</span>
+            <h3>Privacy First</h3>
+            <p>Your data is yours. We prioritize security and ethical AI practices in every interaction.</p>
+        </div>
+        <div class="mission-card reveal reveal-up">
+            <span>💡</span>
+            <h3>Continuous Innovation</h3>
+            <p>Constantly evolving our agents with the latest research to provide cutting-edge assistance.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AI Assistant Hub</h3>
+                <p>Empowering your daily life with specialized AI agents for productivity, health, and learning.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Assistants</h3>
+                <a href="javascript:void(0)" onclick="openChat('Coding Assistant')">Coding AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Gym Assistant')">Fitness AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Study Assistant')">Study AI</a>
+                <a href="javascript:void(0)" onclick="openChat('Finance Assistant')">Finance AI</a>
+            </div>
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <a href="services.html">Services</a>
+                <a href="about.html">About Hub</a>
+                <a href="forms/profile.html">Privacy Settings</a>
+                <a href="#">Terms of Use</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <p>📍 AI Research Lab, Tech Square</p>
+                <p>✉️ aihub2804@gmail.com</p>
+                <p>🌐 aisssistanthub.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AI Assistant Hub. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

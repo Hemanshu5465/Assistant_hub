@@ -45,7 +45,7 @@ git push origin main
 
 ## 4. Import into Vercel
 
-1. https://vercel.com/new → import `Hemanshu5465/Ai-assistant-hub`.
+1. https://vercel.com/new → import `Hemanshu5465/Assistant_hub`.
 2. Framework preset: **Other**. Root directory: `/`. No build command. No output dir.
 3. Add **Environment Variables** (Settings → Environment Variables):
 

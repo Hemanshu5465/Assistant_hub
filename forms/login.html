@@ -409,28 +409,6 @@
                 <button type="submit" class="btn-login"> Sign In</button>
             </form>
 
-            <div class="divider">OR</div>
-
-            <!-- Google Identity Services Script -->
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-            <!-- Google Configuration -->
-            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID_HERE" data-callback="handleCredentialResponse"
-                data-auto_prompt="false">
-            </div>
-
-            <div class="social-login">
-                <!-- Google Button Render Target -->
-                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                    data-text="sign_in_with" data-size="large" data-logo_alignment="left">
-                </div>
-
-                <button class="social-btn">
-                    <img src="github.png" height="25px">
-                    GitHub
-                </button>
-            </div>
-
             <div class="signup-link">
                 Don't have an account? <a href="register.html">Sign Up</a>
             </div>
@@ -438,32 +416,6 @@
     </div>
 
     <script>
-        // Handle Google Sign-In Response
-        async function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-
-            try {
-                const res = await fetch(`${window.API_BASE}/api/auth/google`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ token: response.credential })
-                });
-
-                const data = await res.json();
-
-                if (res.ok) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    showToast('Google Login successful!', 'success');
-                    setTimeout(() => window.location.href = '../index.html', 1000);
-                } else {
-                    showToast(data.message || "Google Login failed", 'error');
-                }
-            } catch (error) {
-                console.error(error);
-                showToast("Server connection failed", 'error');
-            }
-        }
-
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggle = document.querySelector('.password-toggle');

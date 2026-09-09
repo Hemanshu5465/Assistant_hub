@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../config.js"></script>
-    <title>Sign Up - TechSolutions</title>
+    <title>Sign Up - AI Assistant Hub</title>
     <link rel="stylesheet" href="../notifications.css">
     <script src="../notifications.js"></script>
     <style>
@@ -407,7 +407,7 @@
                 <img src="../chat_icon.png" height="50px">
                 Ai Assistant Hub
             </div>
-            <h1>Start Your Journey with TechSolutions</h1>
+            <h1>Start Your Journey with AI Assistant Hub</h1>
             <p>Create your account and unlock access to cutting-edge technology solutions that drive business growth.
             </p>
             <ul class="benefits">
@@ -549,58 +549,12 @@
                 <button type="submit" class="btn-register">Create Account</button>
             </form>
 
-            <div class="divider">OR</div>
-
-            <!-- Google Identity Services Script -->
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-            <!-- Google Configuration -->
-            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID_HERE" data-callback="handleCredentialResponse"
-                data-auto_prompt="false">
-            </div>
-
-            <div class="social-register">
-                <!-- Google Button -->
-                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                    data-text="signup_with" data-size="large" data-logo_alignment="left">
-                </div>
-
-                <button class="social-btn">
-                    <img src="github.png" height="25px">
-                    Sign up with GitHub
-                </button>
-            </div>
-
             <div class="login-link">
                 Already have an account? <a href="login.html">Sign In</a>
             </div>
         </div>
 
         <script>
-            // Handle Google Sign-Up Response
-            async function handleCredentialResponse(response) {
-                try {
-                    const res = await fetch(`${window.API_BASE}/api/auth/google`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ token: response.credential })
-                    });
-
-                    const data = await res.json();
-
-                    if (res.ok) {
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                        showToast('Google Registration successful!', 'success');
-                        setTimeout(() => window.location.href = '../index.html', 1000);
-                    } else {
-                        showToast(data.message || "Google Registration failed", 'error');
-                    }
-                } catch (error) {
-                    console.error(error);
-                    showToast("Server connection failed", 'error');
-                }
-            }
-
             function togglePassword(fieldId, button) {
                 const passwordInput = document.getElementById(fieldId);
                 if (passwordInput.type === 'password') {

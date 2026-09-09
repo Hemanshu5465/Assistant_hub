@@ -1,5 +1,13 @@
 # Deploying AI Assistant Hub (GitHub + Vercel)
 
+**Live:** https://assistant-hub-nine.vercel.app
+(Vercel project `assistant-hub`, team `hemanshus-projects-30a38269`.)
+
+Redeploy after code changes: `vercel deploy --prod` from the repo root
+(the GitHub auto-deploy connection isn't set up — add a GitHub login
+connection in Vercel account settings, then `vercel git connect`, if you
+want push-to-deploy).
+
 The repo is set up so **one Vercel project** serves both the static frontend
 and the Express API (as a serverless function).
 

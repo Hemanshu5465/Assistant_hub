@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (dropName) dropName.innerText = localUser.name;
 
       try {
-        const res = await fetch(`http://127.0.0.1:5000/api/user/${localUser.id}`);
+        const res = await fetch(`${window.API_BASE}/api/user/${localUser.id}`);
         if (res.ok) {
           const user = await res.json();
 
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (dropEmail) dropEmail.innerText = user.email;
 
           if (user.profileImage) {
-            initials.innerHTML = `<img src="http://127.0.0.1:5000${user.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            initials.innerHTML = `<img src="${window.API_BASE}${user.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
             initials.style.background = "transparent";
           } else {
             initials.innerText = user.name.charAt(0).toUpperCase();

@@ -2,21 +2,23 @@ const express = require("express");
 const router = express.Router();
 const Groq = require("groq-sdk");
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+const { uploadRoot } = require("../config/paths");
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-// Create uploads directory if it doesn't exist
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+// Lazy so a missing GROQ_API_KEY doesn't crash the whole server/function
+// at import time - only /api/chat requests fail, and with a clear message.
+let _groq;
+function getGroq() {
+    if (!process.env.GROQ_API_KEY) {
+        throw new Error("GROQ_API_KEY is not configured on the server");
+    }
+    if (!_groq) _groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    return _groq;
 }
 
 // Multer Configuration
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/");
+        cb(null, uploadRoot);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + "-" + file.originalname);
@@ -65,7 +67,7 @@ router.post("/", upload.array("files"), async (req, res) => {
         ];
 
         const fileDataForResponse = [];
-        let hasImage = false;
+        let attachmentNote = "";
 
         for (const file of uploadedFiles) {
             const isImage = file.mimetype.startsWith("image/");
@@ -78,36 +80,20 @@ router.post("/", upload.array("files"), async (req, res) => {
                 isImage: isImage
             });
 
-            if (isImage) {
-                hasImage = true;
-                const imagePath = path.join(__dirname, "..", file.path);
-                const base64Image = fs.readFileSync(imagePath).toString("base64");
-                messages.push({
-                    role: "user",
-                    content: [
-                        { type: "text", text: message || "What is in this image?" },
-                        {
-                            type: "image_url",
-                            image_url: {
-                                url: `data:${file.mimetype};base64,${base64Image}`,
-                            },
-                        },
-                    ],
-                });
-            } else {
-                // For non-image files, we just inform the model about the attachment for now
-                messages.push({ role: "user", content: `[Attached document: ${file.originalname}] ${message || ""}` });
-            }
+            // The current Groq model is text-only, so we can't analyse image/file
+            // contents. We still accept the upload and let the model know it exists.
+            attachmentNote += `[Attached ${isImage ? "image" : "file"}: ${file.originalname}] `;
         }
 
-        if (!hasImage && message) {
-            messages.push({ role: "user", content: message });
+        const userContent = `${attachmentNote}${message || (attachmentNote ? "Please describe what you can about this attachment." : "")}`.trim();
+        if (userContent) {
+            messages.push({ role: "user", content: userContent });
         }
 
-        // Select model: if image use vision model, else use standard fast model
-        const model = hasImage ? "llama-3.2-11b-vision-preview" : "llama-3.3-70b-versatile";
+        // Groq text model. Update here if the account gains access to other models.
+        const model = "openai/gpt-oss-120b";
 
-        const chatCompletion = await groq.chat.completions.create({
+        const chatCompletion = await getGroq().chat.completions.create({
             messages: messages,
             model: model,
         });

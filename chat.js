@@ -206,21 +206,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
+    // Renders the assistant's Markdown reply (headings, lists, tables, code
+    // blocks, bold, links, etc.) into safe HTML - the same way mainstream AI
+    // chat UIs display responses. Falls back to plain text if the Markdown
+    // libraries are unavailable (e.g. offline).
     function formatResponse(text) {
         if (!text) return "";
-        // Simple formatting
-        let formatted = text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-            .replace(/`(.*?)`/g, '<code>$1</code>') // Inline code
-            .replace(/\n/g, '<br>') // New lines
-            .replace(/^\s*-\s+(.*)/gm, '<li>$1</li>'); // Lists (simple)
 
-        // Wrap lists if they exist
-        if (formatted.includes('<li>')) {
-            formatted = formatted.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        if (typeof marked !== "undefined" && typeof DOMPurify !== "undefined") {
+            try {
+                const html = marked.parse(text, { gfm: true, breaks: true });
+                return DOMPurify.sanitize(html);
+            } catch (e) {
+                console.error("Markdown render failed:", e);
+            }
         }
 
-        return formatted;
+        // Fallback: minimal, safe formatting
+        return escapeHtml(text)
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+            .replace(/`([^`]+?)`/g, "<code>$1</code>")
+            .replace(/\n/g, "<br>");
     }
 
     function copyToClipboard(text, btn) {
@@ -313,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const loadingId = addLoadingIndicator();
 
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/chat", {
+            const res = await fetch(`${window.API_BASE}/api/chat`, {
                 method: "POST",
                 body: formData
             });
@@ -366,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
             filesHtml += `</div>`;
         }
 
-        const formattedText = sender === 'bot' ? formatResponse(text) : text.replace(/\n/g, '<br>');
+        const formattedText = sender === 'bot' ? formatResponse(text) : escapeHtml(text).replace(/\n/g, '<br>');
 
         const actionButtons = `
             <div class="msg-actions">

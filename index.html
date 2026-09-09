@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="config.js"></script>
   <title>AI Assistant Hub</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="notifications.css">
@@ -299,7 +300,7 @@
       status.innerText = "";
 
       try {
-        const res = await fetch("http://127.0.0.1:5000/api/contact", {
+        const res = await fetch(`${window.API_BASE}/api/contact`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, message })

@@ -22,8 +22,8 @@
 ### Backend
 - **Runtime**: Node.js
 - **Framework**: Express.js
-- **Database**: MongoDB (via Mongoose)
-- **Authentication**: `jsonwebtoken`, `bcrypt`
+- **Database**: PostgreSQL (via Sequelize ORM)
+- **Authentication**: `bcrypt` password hashing, Google Sign-In (`google-auth-library`)
 - **AI Integration**:
     - Google Generative AI (Gemini)
     - OpenAI API
@@ -42,7 +42,7 @@ Ai assistant hub/
 ├── backend/            # Server Side Code
 │   ├── server.js       # Entry Point
 │   ├── config/         # DB Configuration
-│   ├── models/         # Mongoose Schemas
+│   ├── models/         # Sequelize Models
 │   ├── routes/         # API Routes (auth, chat, user, etc.)
 │   └── package.json    # Backend Dependencies
 ├── forms/              # Auth & User Forms
@@ -56,7 +56,7 @@ Ai assistant hub/
 
 ### Prerequisites
 - Node.js installed
-- MongoDB installed and running (or a MongoDB Atlas URI)
+- PostgreSQL installed and running (or a hosted Postgres URL: Neon / Supabase / Render / Railway)
 
 ### Backend Setup
 1.  Navigate to the backend directory:
@@ -72,11 +72,26 @@ Ai assistant hub/
     - Add the following keys:
       ```env
       PORT=5000
-      MONGO_URI=your_mongodb_connection_string
+
+      # Local Postgres
+      PG_HOST=127.0.0.1
+      PG_PORT=5432
+      PG_DATABASE=ai_assistant_hub
+      PG_USER=postgres
+      PG_PASSWORD=your_password
+      PG_SSL=false
+      # OR a single hosted connection string (takes priority over PG_* above)
+      # DATABASE_URL=postgres://user:password@host:5432/dbname
+
       JWT_SECRET=your_jwt_secret
+      GOOGLE_CLIENT_ID=your_google_oauth_client_id
       GEMINI_API_KEY=your_gemini_key
       OPENAI_API_KEY=your_openai_key
       GROQ_API_KEY=your_groq_key
+
+      # Needed only for "Forgot password" + contact form emails
+      EMAIL_USER=your_gmail_address
+      EMAIL_PASS=your_gmail_app_password
       ```
 4.  Start the Server:
     ```bash

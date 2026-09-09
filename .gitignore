@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+**/.env
+!**/.env.example
+
+# uploaded files (not source; ephemeral on serverless)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# vercel
+.vercel
+
+# misc
+*.log
+.DS_Store

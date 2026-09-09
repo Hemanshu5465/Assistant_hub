@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../config.js"></script>
     <title>Forgot Password - Ai Assistant Hub</title>
     <link rel="stylesheet" href="../style.css"> <!-- Reusing main styles if applicable, or inline -->
     <style>
@@ -102,7 +103,7 @@
             btn.innerText = "Sending...";
 
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/auth/forgot-password", {
+                const res = await fetch(`${window.API_BASE}/api/auth/forgot-password`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email })

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../config.js"></script>
     <title>Reset Password - Ai Assistant Hub</title>
     <style>
         body {
@@ -88,7 +89,7 @@
             btn.innerText = "Updating...";
 
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/auth/reset-password", {
+                const res = await fetch(`${window.API_BASE}/api/auth/reset-password`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ token, newPassword })

@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:5000/api/admin";
+const API_BASE = `${window.API_BASE}/api/admin`;
 
 // Auth Check
 const user = JSON.parse(localStorage.getItem("user"));

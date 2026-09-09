@@ -4,18 +4,12 @@ const multer = require("multer");
 const path = require("path");
 const User = require("../models/User");
 
-const fs = require("fs");
-
-// Ensure Uploads Directory Exists
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+const { uploadRoot } = require("../config/paths");
 
 // Multer Config
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/");
+        cb(null, uploadRoot);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));

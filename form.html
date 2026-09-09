@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="config.js"></script>
     <title>User Information Form</title>
     <link rel="stylesheet" href="notifications.css">
     <script src="notifications.js"></script>
@@ -289,7 +290,7 @@
 
             try {
                 // Send to Backend
-                const res = await fetch("http://127.0.0.1:5000/api/form", {
+                const res = await fetch(`${window.API_BASE}/api/form`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)

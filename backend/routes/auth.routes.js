@@ -1,5 +1,7 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+// bcryptjs (pure JS) instead of native "bcrypt": identical API, verifies the
+// same $2a/$2b hashes, and builds reliably on serverless (Vercel/Lambda).
+const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const User = require("../models/User.js");
 const FormEntry = require("../models/FormEntry");
@@ -53,7 +55,7 @@ router.post("/login", async (req, res) => {
 
     res.json({
       message: "Login successful",
-      user: { id: user.id, name: user.name }
+      user: { id: user.id, name: user.name, email: user.email, role: "user" }
     });
   } catch (err) {
     console.error(err);
@@ -89,7 +91,7 @@ router.post("/google", async (req, res) => {
 
     res.json({
       message: "Login successful",
-      user: { id: user.id, name: user.name }
+      user: { id: user.id, name: user.name, email: user.email, role: "user" }
     });
 
   } catch (err) {

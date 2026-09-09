@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:5000/api";
+const API_BASE = `${window.API_BASE}/api`;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const localUser = JSON.parse(localStorage.getItem("user"));
@@ -36,7 +36,7 @@ async function loadProfileData(userId) {
         const initials = document.getElementById("initials");
 
         if (user.profileImage) {
-            avatarDisplay.innerHTML = `<img src="http://127.0.0.1:5000${user.profileImage}" alt="Avatar">`;
+            avatarDisplay.innerHTML = `<img src="${window.API_BASE}${user.profileImage}" alt="Avatar">`;
         } else {
             initials.innerText = user.name.charAt(0).toUpperCase();
         }
@@ -110,7 +110,7 @@ document.getElementById("fileInput").addEventListener("change", async (e) => {
         if (res.ok) {
             showToast("Avatar updated!", "success");
             document.getElementById("avatarDisplay").innerHTML =
-                `<img src="http://127.0.0.1:5000${data.imageUrl}" alt="Avatar">`;
+                `<img src="${window.API_BASE}${data.imageUrl}" alt="Avatar">`;
         }
     } catch (err) { console.error(err); }
 });

@@ -1,5 +1,11 @@
 const { Sequelize } = require("sequelize");
 
+// Sequelize loads the postgres driver with a dynamic require, which Vercel's
+// bundler (@vercel/nft) can't trace - so reference them explicitly here to
+// force them into the serverless function bundle.
+require("pg");
+require("pg-hstore");
+
 // Supports either a single DATABASE_URL (recommended for hosted Postgres
 // like Neon / Supabase / Render / Railway) OR individual PG_* fields
 // (recommended for local Postgres installs).
